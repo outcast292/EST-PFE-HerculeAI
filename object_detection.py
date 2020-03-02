@@ -18,7 +18,15 @@ def forSecond(frame_number, output_arrays, count_arrays, average_count, returned
                 "name" : eachItem[0].get("name"),
                 "box_points" : eachItem[0].get("box_points"),
             }
-            detected.append(dictx)
+            if len(detected) == 0:
+                detected.append(dictx)
+            else:
+                for eachDict in detected:
+                    if eachDict != dictx is True:
+                        detected.append(dictx)
+                    else:
+                        print("Already Exists")
+
     else:
         print("empty")
 
