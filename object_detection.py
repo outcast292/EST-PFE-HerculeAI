@@ -25,10 +25,10 @@ def forSecond(frame_number, output_arrays, count_arrays, average_count, returned
                     if eachDict != dictx is True:
                         detected.append(dictx)
                     else:
-                        print("Already Exists")
+                        print("Already detected")
 
     else:
-        print("empty")
+        print("Nothing detected in this frame")
 
 
 
@@ -56,8 +56,4 @@ def launch_detector():
     camera.release()
     cv2.destroyAllWindows()
 
-    print("result")
-    print(detected)
-
-
-launch_detector()
+    return detected
