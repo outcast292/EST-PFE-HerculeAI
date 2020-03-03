@@ -5,7 +5,7 @@ import cv2
 import sys
 
 
-execution_path = os.getcwd()
+execution_path = "model/"
 detected = []
 
 resized = False
@@ -38,22 +38,34 @@ def launch_detector():
     video_detector.setModelPath(os.path.join(execution_path, "yolo.h5")) # Download the model via this link https://github.com/OlafenwaMoses/ImageAI/releases/tag/1.0
     video_detector.loadModel()
 
-    camera = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-
-    costum_obj = video_detector.CustomObjects(person = True)
-    video_detector.detectCustomObjectsFromVideo(camera_input=camera, 
+    camera = cv2.VideoCapture(1,cv2.CAP_DSHOW)
+    plt.show()
+    #costum_obj = video_detector.CustomObjects(person = True)
+    video_detector.detectObjectsFromVideo(camera_input=camera, 
                                             save_detected_video=False,  
-                                            frames_per_second=1,
-                                            frame_detection_interval=1, 
-                                            per_second_function=forSecond,  
+                                            frames_per_second=30,
+                                            frame_detection_interval=3, 
+                                            per_second_function=forSecond, 
+                                            per_frame_function=forFrame, 
                                             minimum_percentage_probability=30, 
                                             return_detected_frame=True, 
                                             log_progress=True,
                                             detection_timeout=10,
-                                            display_percentage_probability=False,
-                                            custom_objects=costum_obj)
+                                            display_percentage_probability=False
+                                            )
 
     camera.release()
     cv2.destroyAllWindows()
 
     return detected
+
+
+def forFrame(frame_number, output_array, output_count, returned_frame):
+
+    plt.clf()
+
+    plt.title("Frame : " + str(frame_number))
+    plt.imshow(returned_frame, interpolation="none")
+
+    plt.pause(0.01)
+
