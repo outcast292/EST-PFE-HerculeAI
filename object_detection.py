@@ -38,20 +38,21 @@ def launch_detector():
     video_detector.setModelPath(os.path.join(execution_path, "yolo.h5")) # Download the model via this link https://github.com/OlafenwaMoses/ImageAI/releases/tag/1.0
     video_detector.loadModel()
 
-    camera = cv2.VideoCapture(1,cv2.CAP_DSHOW)
+    camera = cv2.VideoCapture(0,cv2.CAP_DSHOW)
     plt.show()
-    #costum_obj = video_detector.CustomObjects(person = True)
-    video_detector.detectObjectsFromVideo(camera_input=camera, 
+    costum_obj = video_detector.CustomObjects(person = True,orange=True,banana=True,apple=True)
+    video_detector.detectCustomObjectsFromVideo(camera_input=camera, 
                                             save_detected_video=False,  
                                             frames_per_second=30,
                                             frame_detection_interval=3, 
                                             per_second_function=forSecond, 
                                             per_frame_function=forFrame, 
-                                            minimum_percentage_probability=30, 
+                                            minimum_percentage_probability=60, 
                                             return_detected_frame=True, 
                                             log_progress=True,
                                             detection_timeout=10,
-                                            display_percentage_probability=False
+                                            display_percentage_probability=False,
+                                            custom_objects=costum_obj
                                             )
 
     camera.release()
