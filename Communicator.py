@@ -17,6 +17,10 @@ class serial_interface:
         self.rs232.close()
         print('Serial closed') 
     def write_msg(self,message):
-        self.rs232.write(message+b"\r\n")
+        self.rs232.write((message+"\r\n").encode())
     def read_msg(self):
-        return self.rs232.readline()
+        return (self.rs232.readline()).decode()
+    def clearBuffer(self):
+        self.rs232.reset_input_buffer()
+
+    
