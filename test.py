@@ -1,27 +1,21 @@
-#import object_detection
-#list = object_detection.launch_detector()
-#print(list)
-
 import Robot
-"""
-#first test is working
-serial = serial_interface()
 
-serial.write_msg(b"$")
-
-print(serial.read_msg().decode())"""
-""" 
-#second test
-Creating Shell
-"""
 rb = Robot.robot()
-while True:
-    inpt = input("exit pour quitter\nentrez votre commande : ")
-    if inpt == "exit":
-        break
-    elif inpt == "$":
-        rb.controller.write_msg("$")
-        print(rb.controller.read_msg())
-    else:
-        rb.goToDropPoint(inpt)
-        
+drop_points = rb.drop_points
+
+def getKey(objectType): 
+    for key in drop_points.items(): 
+         if key[0] == objectType: 
+             return key[0]
+    return "key doesn't exist"
+
+
+def sortObject(detected_objects):
+    print("sorting")
+    for eachObject in detected_objects:
+        if eachObject['name'] == getKey(eachObject['name']):
+            print("picking up " + eachObject['name'])
+            rb.goToDropPoint(eachObject['name'])
+        else:
+            print("cannot sort " + eachObject['name'])
+
