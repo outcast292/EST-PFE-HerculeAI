@@ -3,17 +3,16 @@ import os
 from matplotlib import pyplot as plt
 import cv2
 import sys
+import handler
 
 
 execution_path = "model/"
 detected = []
 
-resized = False
-
-def forSecond(frame_number, output_arrays, count_arrays, average_count, returned_frame):
-    global detected
-    if len(output_arrays) != 0:
-        for eachItem in output_arrays:
+def returnDetected(output_arrays):
+    detected = []
+    for eachItem in output_arrays:
+        if(len(eachItem) != 0):
             dictx = {
                 "name" : eachItem[0].get("name"),
                 "box_points" : eachItem[0].get("box_points"),
@@ -24,33 +23,40 @@ def forSecond(frame_number, output_arrays, count_arrays, average_count, returned
                 for eachDict in detected:
                     if eachDict != dictx is True:
                         detected.append(dictx)
-                    else:
-                        print("Already detected")
-
+    
+    return detected
+        
+def forSecond(frame_number, output_arrays, count_arrays, average_count, returned_frame):
+    detected = returnDetected(output_arrays)
+    if len(detected) == 0:
+        print("Nothing detected")
     else:
-        print("Nothing detected in this frame")
+        handler.sortObject(detected)
+
 
 
 
 def launch_detector():
     video_detector = VideoObjectDetection()
     video_detector.setModelTypeAsYOLOv3()
+    print("setting model")
     video_detector.setModelPath(os.path.join(execution_path, "yolo.h5")) # Download the model via this link https://github.com/OlafenwaMoses/ImageAI/releases/tag/1.0
+    print("loading model")
     video_detector.loadModel()
+    print("loaded model")
 
     camera = cv2.VideoCapture(0,cv2.CAP_DSHOW)
     plt.show()
-    costum_obj = video_detector.CustomObjects(person = True,orange=True,banana=True,apple=True)
+    costum_obj = video_detector.CustomObjects(person=True, orange=True,banana=True,apple=True)
     video_detector.detectCustomObjectsFromVideo(camera_input=camera, 
                                             save_detected_video=False,  
-                                            frames_per_second=30,
-                                            frame_detection_interval=3, 
+                                            frames_per_second=5,
+                                            frame_detection_interval=1, 
                                             per_second_function=forSecond, 
                                             per_frame_function=forFrame, 
                                             minimum_percentage_probability=60, 
                                             return_detected_frame=True, 
                                             log_progress=True,
-                                            detection_timeout=10,
                                             display_percentage_probability=False,
                                             custom_objects=costum_obj
                                             )
@@ -58,7 +64,6 @@ def launch_detector():
     camera.release()
     cv2.destroyAllWindows()
 
-    return detected
 
 
 def forFrame(frame_number, output_array, output_count, returned_frame):
