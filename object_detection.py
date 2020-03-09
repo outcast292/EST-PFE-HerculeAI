@@ -27,7 +27,7 @@ def returnDetected(output_arrays):
     return detected
         
 def forSecond(frame_number, output_arrays, count_arrays, average_count, returned_frame):
-    detected = [{"name" : "banane" , "box_points" : [12,32,21,43]}]
+    detected = returnDetected(output_arrays)
     if len(detected) == 0:
         print("Nothing detected")
     else:
