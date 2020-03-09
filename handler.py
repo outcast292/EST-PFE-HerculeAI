@@ -15,7 +15,10 @@ def sortObject(detected_objects):
     for eachObject in detected_objects:
         if eachObject['name'] == getKey(eachObject['name']):
             print("picking up " + eachObject['name'])
+            rb.goToPoints()
+            #rb.goToPickUp()
             rb.goToDropPoint(eachObject['name'])
+            rb.goToPickUp()
         else:
             print("cannot sort " + eachObject['name'])
 

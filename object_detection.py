@@ -27,7 +27,7 @@ def returnDetected(output_arrays):
     return detected
         
 def forSecond(frame_number, output_arrays, count_arrays, average_count, returned_frame):
-    detected = returnDetected(output_arrays)
+    detected = [{"name" : "banane" , "box_points" : [12,32,21,43]}]
     if len(detected) == 0:
         print("Nothing detected")
     else:
@@ -45,7 +45,7 @@ def launch_detector():
     video_detector.loadModel()
     print("loaded model")
 
-    camera = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+    camera = cv2.VideoCapture(1,cv2.CAP_DSHOW)
     plt.show()
     costum_obj = video_detector.CustomObjects(person=True, orange=True,banana=True,apple=True)
     video_detector.detectCustomObjectsFromVideo(camera_input=camera, 

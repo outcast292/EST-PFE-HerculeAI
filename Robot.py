@@ -3,54 +3,61 @@ import time
 
 
 class robot:
-    pick_up_points = ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"]
-    nextPickUpPoints = ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"]
+    nextPickUpPoints = ["L", "B+289:30", "E-511:30", "C+156:30","R+007:30" ,"T-316:30"]
+    standBy = ["L", "B+285:30", "E+035:30", "C-303:30", "R+1:30","T-286:30"] #standby
+    pausePoints = ["L", "B+120:30", "E+035:30", "C-303:30", "R+1:30","T-286:30"] #standby
     drop_points = {
-                    "banane": ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"], 
+                    "banane": ["L", "B-004:30", "E-304:30", "C-097:30", "T-349:30","R+007:30"], 
                     "apple":  ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"], 
-                    "orange": ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"]
+                    "orange": ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"],
                    }
 
-    zero_points = ["L", "B0:30", "C0:30", "E0:30", "T0:30"]
-    pass
+    zero_points = ["L", "B0:30", "C0:30", "E0:30", "T0:30"]                                                                                                                                                          
+    
 
     def __init__(self):  # creates the serial interface and go to pickup Location
-        #self.controller = cm.serial_interface()
+        self.controller = cm.serial_interface()
         self.goToPickUp()
-        pass
 
     def __del__(self):
         self.goToPickUp()
 
     def goToZero(self):
-        #self.controller.write_msg("".join(self.zero_points))
+        self.controller.write_msg("".join(self.zero_points))
         print("going to 0 location")
         time.sleep(3)
-        pass
 
     def openHook(self):
-        #self.controller.write_msg("LP-160:30")
+        self.controller.write_msg("LP-160:30")
         print("opened hook")
-        time.sleep(3)
-        pass
+        time.sleep(1)
 
     def closeHook(self):
-        #self.controller.write_msg("LP+160:30")
+        self.controller.write_msg("LP+160:30")
         print("closed hook")
-        time.sleep(3)
-        pass
+        time.sleep(2)
 
     def goToPickUp(self):
-        #self.controller.write_msg("".join(self.pick_up_points))
+        self.controller.write_msg("".join(self.standBy))
         print("going to pick location")
-        time.sleep(3)
+        time.sleep(1)
         self.openHook()
-        #self.controller.write_msg("".join(self.nextPickUpPoints))
 
     def goToDropPoint(self, objectType):  # Exemple : goToDropPoint("Orange")
         self.closeHook()
-        #self.controller.write_msg("".join(self.drop_points.get(objectType)))
+        self.controller.write_msg("".join(self.standBy))
+        time.sleep(2)
+        self.controller.write_msg("".join(self.pausePoints))
+        time.sleep(1)
+        self.controller.write_msg("".join(self.drop_points.get(objectType)))
+        time.sleep(2)
         print("went to drop points of " + objectType)
-        time.sleep(3)
         self.openHook()
+
+    def goToPoints(self):
+        self.controller.write_msg("".join(self.nextPickUpPoints))
+        time.sleep(2)
+
+
+        
     
