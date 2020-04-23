@@ -6,7 +6,7 @@ class serial_interface:
     # Initializer / Instance Attributes
     def __init__(self):
         self.rs232 = serial.Serial(
-        port='COM3',
+        port='COM7',
         timeout=1,
         baudrate=4800,
         parity=serial.PARITY_NONE,
