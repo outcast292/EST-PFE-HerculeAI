@@ -37,6 +37,7 @@ def forSecond(frame_number, output_arrays, count_arrays, average_count, returned
 
 
 def launch_detector():
+    handler.setup_handler()
     video_detector = VideoObjectDetection()
     video_detector.setModelTypeAsYOLOv3()
     print("setting model")
