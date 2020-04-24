@@ -4,6 +4,8 @@ from matplotlib import pyplot as plt
 import cv2
 import sys
 import handler
+from sys import platform
+
 
 execution_path = "model/"
 detected = []
@@ -44,7 +46,15 @@ def launch_detector():
     print("loading model")
     video_detector.loadModel()
     print("loaded model")
-    camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    camera = None
+    if platform=="win32":
+        camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+    elif platform=="linux":
+        camera = cv2.VideoCapture(0)
+    else:
+        print("os detécté inconnu ou non-supporté")
+        exit(0)
+
     plt.show()
     costum_obj = video_detector.CustomObjects(
         person=True, orange=True, banana=True, apple=True)

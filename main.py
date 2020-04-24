@@ -4,6 +4,8 @@ import time
 import Communicator as cm
 import object_detection
 import multiprocessing
+from sys import platform
+
 
 
 class ClientThread(threading.Thread):
@@ -72,6 +74,14 @@ if __name__ == '__main__':
     tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     tcpsock.bind(("", 5555))
+    if(platform=="win32"):
+        print("os detécté : windows")
+    elif(platform == "linux"):
+        print("os detécté : linux")
+    else:
+        print("os detécté inconnu ou non-supporté")
+        exit(0)
+
     while True:
         tcpsock.listen(0)
         print("En écoute...")
