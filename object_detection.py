@@ -40,11 +40,13 @@ def launch_detector():
     handler.setup_handler()
     video_detector = VideoObjectDetection()
     video_detector.setModelTypeAsYOLOv3()
+    #video_detector.setModelTypeAsRetinaNet()
     print("setting model")
     # Download the model via this link https://github.com/OlafenwaMoses/ImageAI/releases/tag/1.0
     video_detector.setModelPath(os.path.join(execution_path, "yolo.h5"))
+    #video_detector.setModelPath(os.path.join(execution_path, "resnet.h5"))
     print("loading model")
-    video_detector.loadModel()
+    video_detector.loadModel("flash")
     print("loaded model")
     camera = None
     if platform=="win32":
