@@ -4,7 +4,7 @@ init_times = 5
 
 port_path = None
 if platform == "win32":
-    port_path = "COM7"
+    port_path = "COM1"
 elif platform == "linux":
     port_path = "/dev/ttyUSB0"
 else:

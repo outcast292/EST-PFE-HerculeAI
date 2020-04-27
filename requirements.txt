@@ -1,0 +1,8 @@
+pyserial
+tensorflow==1.13.1
+keras==2.3.1
+imageai
+opencv-python
+numpy
+matplotlib
+wget
