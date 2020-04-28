@@ -5,6 +5,7 @@ import Communicator as cm
 import object_detection
 import multiprocessing
 from sys import platform
+multiprocessing.allow_connection_pickling()
 
 
 
@@ -53,7 +54,7 @@ class ClientThread(threading.Thread):
                     mode = 2
                     print("%s:%s  changed mode to 2 " % (self.ip, self.port, ))
                     obj_det = multiprocessing.Process(
-                        target=object_detection.launch_detector)
+                        target=object_detection.launch_detector, args=(self.clientsocket,))
                     obj_det.start()
                     self.clientsocket.sendall(b'changed mode to 2\r\n')
 

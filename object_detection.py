@@ -36,8 +36,8 @@ def forSecond(frame_number, output_arrays, count_arrays, average_count, returned
         handler.sortObject(detected)
 
 
-def launch_detector():
-    handler.setup_handler()
+def launch_detector(tsocket):
+    handler.setup_handler(tsocket)
     video_detector = VideoObjectDetection()
     video_detector.setModelTypeAsYOLOv3()
     #video_detector.setModelTypeAsRetinaNet()
@@ -60,6 +60,7 @@ def launch_detector():
     plt.show()
     costum_obj = video_detector.CustomObjects(
         person=True, orange=True, banana=True, apple=True)
+    handler.socket.sendall(b'detection will start soon\r\n')
     video_detector.detectCustomObjectsFromVideo(camera_input=camera,
                                                 save_detected_video=False,
                                                 frames_per_second=5,
