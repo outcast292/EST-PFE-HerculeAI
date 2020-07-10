@@ -4,7 +4,7 @@ init_times = 5
 
 port_path = None
 if platform == "win32":
-    port_path = "COM2"
+    port_path = "COM5"
 elif platform == "linux":
     port_path = "/dev/ttyUSB0"
 else:
@@ -31,7 +31,7 @@ class serial_interface:
         print('Serial closed')
 
     def write_msg(self, message):
-        self.rs232.write((message+"\r\n").encode())
+        self.rs232.write((message + "\r\n").encode())
 
     def read_msg(self):
         return (self.rs232.readline()).decode()

@@ -8,7 +8,6 @@ from sys import platform
 multiprocessing.allow_connection_pickling()
 
 
-
 class ClientThread(threading.Thread):
 
     def __init__(self, ip, port, clientsocket):
@@ -36,8 +35,14 @@ class ClientThread(threading.Thread):
                 if "$" == response:
                     if(mode == 1):
                         serial.write_msg("$")
-                        #self.clientsocket.sendall(serial.read_msg().encode())
-                        self.clientsocket.sendall("B-100:29E-103:29C-086:29R+047:29T+090:90\r\n".encode())
+                        msg = serial.read_msg()
+                        value = msg.split("B")
+                        if(len(value) == 0):
+                            self.clientsocket.sendall(
+                                ("B" + value[0]).encode())
+                        else:
+                            self.clientsocket.sendall(("B" + value[1]).encode())
+                        # self.clientsocket.sendall("B-100:29E-103:29C-086:29R+047:29T+090:90\r\n".encode())
                 elif "setmode 1" == response:
                     mode = 1
                     if(obj_det != None):
@@ -75,7 +80,7 @@ if __name__ == '__main__':
     tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     tcpsock.bind(("", 8888))
-    if(platform=="win32"):
+    if(platform == "win32"):
         print("os detécté : windows")
     elif(platform == "linux"):
         print("os detécté : linux")

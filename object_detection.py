@@ -50,7 +50,7 @@ def launch_detector(tsocket):
     print("loaded model")
     camera = None
     if platform=="win32":
-        camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+        camera = cv2.VideoCapture(1, cv2.CAP_DSHOW)
     elif platform=="linux":
         camera = cv2.VideoCapture(0)
     else:
@@ -59,7 +59,7 @@ def launch_detector(tsocket):
 
     plt.show()
     costum_obj = video_detector.CustomObjects(
-        person=True, orange=True, banana=True, apple=True)
+        person=True, orange=True, banana=True, apple=True,cell_phone=True)
     handler.socket.sendall(b'detection will start soon\r\n')
     video_detector.detectCustomObjectsFromVideo(camera_input=camera,
                                                 save_detected_video=False,

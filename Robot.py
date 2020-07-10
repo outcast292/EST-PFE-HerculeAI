@@ -3,17 +3,19 @@ import time
 
 
 class robot:
-    nextPickUpPoints = ["L", "B+289:30", "E-511:30", "C+156:30","R+007:30" ,"T-316:30"]
-    standBy = ["L", "B+285:30", "E+035:30", "C-303:30", "R+1:30","T-286:30"] #standby
-    pausePoints = ["L", "B+120:30", "E+035:30", "C-303:30", "R+1:30","T-286:30"] #standby
+    nextPickUpPoints = ["L", "B+289:30", "E-511:30",
+                        "C+156:30", "R+007:30", "T-316:30"]
+    standBy = ["L", "B+285:30", "E+035:30",
+               "C-303:30", "R+1:30", "T-286:30"]  # standby
+    pausePoints = ["L", "B+120:30", "E+035:30",
+                   "C-303:30", "R+1:30", "T-286:30"]  # standby
     drop_points = {
-                    "banane": ["L", "B-004:30", "E-304:30", "C-097:30", "T-349:30","R+007:30"], 
-                    "apple":  ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"], 
-                    "orange": ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"],
-                   }
+        "banane": ["L", "B-004:30", "E-304:30", "C-097:30", "T-349:30", "R+007:30"],
+        "apple":  ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"],
+        "orange": ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"], "cell phone": ["L", "B-160:30", "C-160:30", "E-160:30", "T-160:30"]
+    }
 
-    zero_points = ["L", "B0:30", "C0:30", "E0:30", "T0:30"]                                                                                                                                                          
-    
+    zero_points = ["L", "B0:30", "C0:30", "E0:30", "T0:30"]
 
     def __init__(self):  # creates the serial interface and go to pickup Location
         self.controller = cm.serial_interface()
@@ -57,7 +59,3 @@ class robot:
     def goToPoints(self):
         self.controller.write_msg("".join(self.nextPickUpPoints))
         time.sleep(2)
-
-
-        
-    
